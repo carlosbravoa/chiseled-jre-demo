@@ -1,11 +1,11 @@
-FROM ubuntu:24.04 AS builder
+FROM public.ecr.aws/ubuntu/ubuntu:24.04 AS builder
 RUN apt-get update && apt-get install -y openjdk-8-jdk
 WORKDIR /app
 ADD HelloWorldServer.java .
 
 RUN javac -source 8 -target 8 HelloWorldServer.java -d .
 
-FROM ubuntu/jre:21-24.04_edge
+FROM public.ecr.aws/ubuntu/jre:21-24.04_stable
 
 COPY --from=builder /app/HelloWorldServer.class .
 
